@@ -1,8 +1,12 @@
+require 'rack-flash'
 class ApplicationController < Sinatra::Base
-  set :views, proc { File.join(root, '../views/') }
-  register Sinatra::Twitter::Bootstrap::Assets
+  register Sinatra::ActiveRecordExtension
+  enable :sessions
+  set :session_secret, ENV{"SESSION_SECRET"}
+  set :views, Proc.new { File.join(root, "../views/") }
+  use Rack::Flash
 
   get '/' do
-    erb :"application/root"
+    erb :index
   end
 end
